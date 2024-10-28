@@ -221,10 +221,8 @@ class Backdoor:
                 loss_best = float(loss_outter)
 
             if args.debug and i % 50 == 0:
-                print('Epoch {}, loss_inner: {:.5f}, loss_target: {:.5f}, loss_sim: {:.5f}'\
-                        .format(i, loss_inner, loss_target, loss_sim))
-                print("ACC: {:.4f}, ASR_train: {:.4f}"\
-                        .format(acc_train_clean,acc_train_attach,acc_train_outter))
+                print('Epoch {}, loss_inner: {:.5f}, loss_target: {:.5f}, loss_sim: {:.5f}'.format(i, loss_inner, loss_target, loss_sim))
+                print("ACC: {:.4f}, ASR_train: {:.4f}".format(acc_train_clean,acc_train_attach,acc_train_outter))
                 
         if args.debug:
             print(f"load best weight based on the loss outter{loss_best}")

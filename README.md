@@ -1,5 +1,4 @@
 # SPEAR
-
-The hyper-parameters settings for the datasets are included in `run.sh` To reproduce the performance reported in the paper, you can run the bash file:
-
+To reproduce the performance reported in the paper, you can run following the bash file:
+bash install.sh
 bash run.sh

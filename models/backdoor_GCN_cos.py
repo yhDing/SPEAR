@@ -225,6 +225,7 @@ class Backdoor:
                         .format(i, loss_inner, loss_target, loss_sim))
                 print("ACC: {:.4f}, ASR_train: {:.4f}"\
                         .format(acc_train_clean,acc_train_attach,acc_train_outter))
+                
         if args.debug:
             print(f"load best weight based on the loss outter{loss_best}")
         print(dim)

@@ -81,7 +81,8 @@ device = torch.device(('cuda:{}' if torch.cuda.is_available() else 'cpu').format
 np.random.seed(args.seed)
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
-#%%
+print(args)
+
 from torch_geometric.utils import to_undirected
 import torch_geometric.transforms as T
 transform = T.Compose([T.NormalizeFeatures()])

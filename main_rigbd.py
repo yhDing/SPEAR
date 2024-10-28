@@ -8,8 +8,7 @@ from help_funcs import reconstruct_prune_unrelated_edge
 
 
 # from torch_geometric.loader import DataLoader
-from help_funcs import prune_unrelated_edge,prune_unrelated_edge_isolated
-import scipy.sparse as sp
+from help_funcs import prune_unrelated_edge
 from select_sample import select
 
 # Training settings
@@ -152,10 +151,6 @@ poison_x, poison_edge_index, poison_edge_weights, poison_labels = model.get_pois
 if(args.defense_mode == 'prune'):
     poison_edge_index,poison_edge_weights = prune_unrelated_edge(args,poison_edge_index,poison_edge_weights,poison_x,device,large_graph=False)
     bkd_tn_nodes = torch.cat([idx_train,idx_attach]).to(device)
-elif(args.defense_mode == 'isolate'):
-    poison_edge_index,poison_edge_weights,rel_nodes = prune_unrelated_edge_isolated(args,poison_edge_index,poison_edge_weights,poison_x,device,large_graph=False)
-    bkd_tn_nodes = torch.cat([idx_train,idx_attach]).tolist()
-    bkd_tn_nodes = torch.LongTensor(list(set(bkd_tn_nodes) - set(rel_nodes))).to(device)
 elif(args.defense_mode == 'reconstruct'):
     poison_edge_index,poison_edge_weights = reconstruct_prune_unrelated_edge(args,poison_edge_index,poison_edge_weights,poison_x,data.x,data.edge_index,device, idx_attach, large_graph=True)
     bkd_tn_nodes = torch.cat([idx_train,idx_attach]).to(device)

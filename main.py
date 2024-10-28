@@ -8,7 +8,7 @@ from help_funcs import reconstruct_prune_unrelated_edge
 
 
 # from torch_geometric.loader import DataLoader
-from help_funcs import prune_unrelated_edge,prune_unrelated_edge_isolated
+from help_funcs import prune_unrelated_edge
 import scipy.sparse as sp
 from select_sample import select
 
@@ -83,7 +83,6 @@ device = torch.device(('cuda:{}' if torch.cuda.is_available() else 'cpu').format
 np.random.seed(args.seed)
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
-print(args)
 #%%
 from torch_geometric.utils import to_undirected
 import torch_geometric.transforms as T
@@ -149,10 +148,6 @@ poison_x, poison_edge_index, poison_edge_weights, poison_labels = model.get_pois
 if(args.defense_mode == 'prune'):
     poison_edge_index,poison_edge_weights = prune_unrelated_edge(args,poison_edge_index,poison_edge_weights,poison_x,device,large_graph=False)
     bkd_tn_nodes = torch.cat([idx_train,idx_attach]).to(device)
-elif(args.defense_mode == 'isolate'):
-    poison_edge_index,poison_edge_weights,rel_nodes = prune_unrelated_edge_isolated(args,poison_edge_index,poison_edge_weights,poison_x,device,large_graph=False)
-    bkd_tn_nodes = torch.cat([idx_train,idx_attach]).tolist()
-    bkd_tn_nodes = torch.LongTensor(list(set(bkd_tn_nodes) - set(rel_nodes))).to(device)
 elif(args.defense_mode == 'reconstruct'):
     poison_edge_index,poison_edge_weights = reconstruct_prune_unrelated_edge(args,poison_edge_index,poison_edge_weights,poison_x,data.x,data.edge_index,device, idx_attach, large_graph=True)
     bkd_tn_nodes = torch.cat([idx_train,idx_attach]).to(device)
@@ -173,7 +168,6 @@ for seed in seeds:
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed(args.seed)
-    print(args)
     test_model = model_construct(args,args.test_model,data,device).to(device) 
     test_model.fit(poison_x, poison_edge_index, poison_edge_weights, poison_labels, bkd_tn_nodes, idx_val,train_iters=args.epochs,verbose=False)
 
@@ -187,7 +181,7 @@ for seed in seeds:
     print("accuracy on clean test nodes: {:.4f}".format(clean_acc))
     induct_x, induct_edge_index,induct_edge_weights = model.inject_trigger(idx_atk,poison_x,induct_edge_index,induct_edge_weights,device)
     induct_x, induct_edge_index,induct_edge_weights = induct_x.clone().detach(), induct_edge_index.clone().detach(),induct_edge_weights.clone().detach()
-    if(args.defense_mode == 'prune' or args.defense_mode == 'isolate'):
+    if(args.defense_mode == 'prune'):
         induct_edge_index,induct_edge_weights = prune_unrelated_edge(args,induct_edge_index,induct_edge_weights,induct_x,device)
     output = test_model(induct_x,induct_edge_index,induct_edge_weights)
     train_attach_rate = (output.argmax(dim=1)[idx_atk]==args.target_class).float().mean()

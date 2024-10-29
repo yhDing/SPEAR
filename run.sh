@@ -31,5 +31,5 @@ python -u main.py --dataset=ogbn-arxiv --homo_loss_weight=0 --vs_number=565 --te
 python -u main.py --dataset=ogbn-arxiv --homo_loss_weight=5 --vs_number=565 --test_model=GraphSage --epochs=800 --train_lr=0.01 --trojan_epochs=800 --device_id=3 --alpha_int=5 --hidden=80 --outter_size=256 --shadow_lr=0.001 --trojan_lr=0.001
 #GNNGuard
 python -u main.py --dataset=ogbn-arxiv --homo_loss_weight=5 --vs_number=565 --test_model=GNNGuard --epochs=800 --train_lr=0.01 --trojan_epochs=800 --device_id=3 --alpha_int=5 --hidden=80 --outter_size=256 --shadow_lr=0.001 --trojan_lr=0.001
-#RobustGCN
+#RobustGCN--Take several hours on 4090.
 python -u main.py --dataset=ogbn-arxiv --homo_loss_weight=5 --vs_number=565 --test_model=RobustGCN --epochs=800 --train_lr=0.01 --trojan_epochs=800 --device_id=3 --alpha_int=5 --hidden=80 --outter_size=256 --shadow_lr=0.001 --trojan_lr=0.001

@@ -91,17 +91,6 @@ if(args.dataset == 'Cora' or args.dataset == 'Citeseer' or args.dataset == 'Pubm
     dataset = Planetoid(root='./data/', \
                         name=args.dataset,\
                         transform=transform)
-elif(args.dataset == 'Flickr'):
-    dataset = Flickr(root='./data/Flickr/', \
-                    transform=transform)
-elif(args.dataset == 'Photo'):
-    dataset = Amazon(root='./data/', \
-                     name='Photo', \
-                    transform=transform)
-elif(args.dataset == 'Computers'):
-    dataset = Amazon(root='./data/', \
-                     name='Computers', \
-                    transform=transform)
 elif(args.dataset == 'ogbn-arxiv'):
     dataset = PygNodePropPredDataset(name = 'ogbn-arxiv', root='./data/')
     split_idx = dataset.get_idx_split() 

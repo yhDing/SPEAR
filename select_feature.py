@@ -8,10 +8,10 @@ from torch_geometric.datasets import Planetoid,Flickr,Amazon
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='Cora', 
                     help='Dataset',
-                    choices=['Cora','Pubmed','Flickr','ogbn-arxiv','Computers','Photo'])
+                    choices=['Cora','Pubmed','ogbn-arxiv'])
 parser.add_argument('--seed', type=int, default=10, help='Random seed.')
-parser.add_argument('--model', type=str, default='GCN', help='model',
-                    choices=['GCN','GAT','GraphSage'])
+parser.add_argument('--model', type=str, default='MLP', help='model',
+                    choices=['GCN','MLP'])
 parser.add_argument('--epochs', type=int,  default=200, help='Number of epochs to train benign and backdoor model.')
 parser.add_argument('--device_id', type=int, default=3,
                     help="Threshold of prunning edges")

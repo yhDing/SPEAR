@@ -76,7 +76,7 @@ def select(data, args, idx_train, idx_val, device):
 
     if os.path.exists(file_path):
         print(f"Loading selected samples from: {file_path}")
-        selected_samples = torch.load(file_path)
+        selected_samples = torch.load(file_path, map_location=device)
     else:
         print("sorted_samples.pt not found, calling sort() to generate it.")
         selected_samples = sort(data, args, idx_train, idx_val, device)
